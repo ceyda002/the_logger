@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 10px 20px;
+        }
+
+        /* Dark mode styles */
+
+        body.dark-mode nav {
+            background-color: #222;
+        }
+
+
+        .nav-links a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        body.dark-mode .nav-links a {
+            color: #f9f9f9;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-controls button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+
+        #stopwatch {
+            font-family: monospace;
+            font-size: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-links">
+            <a href="{{ url_for ('dashboard')}}" class="course-link">Dashboard</a>
+            <a href="{{ url_for ('list_courses')}}" class="course-link">Courses</a>
+            <a href="{{url_for ('all_sessions')}}" class="course-link">Sessions</a>
+            <a href="{{ url_for ('logout')}}" class="course-link">Log out</a>
+        </div>
+
+
+    </nav>
+</body>
+
+</html>

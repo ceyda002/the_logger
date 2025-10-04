@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Add Session{% endblock %}
+{% block content %}
+
+
+<h1>Log a Study Session</h1>
+<form method="POST" action="{{ url_for('add_session', course_id=course.id) }}">
+    <label for="course_id">Course:</label>
+    <strong>{{ course.coursename }}</strong>
+    <input type="hidden" name="course_id" value="{{ course.id }}">
+    <br>
+
+    <label for="date">Date</label>
+    <input type="date" name="date" required>
+    <br>
+
+    <label for="Hours">Hours:</label>
+    <input type="number" name="hours" min="0" value="0">
+    <label for="minutes">Minutes:</label>
+    <input type="number" name="minutes" min="0" max="59" value="0">
+    <br>
+
+    <label for="notes">Notes:</label>
+    <textarea name="notes"></textarea>
+    <br>
+
+    <button type="submit">Add Session</button>
+
+</form>
+
+{% endblock %}

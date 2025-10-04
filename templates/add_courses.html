@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Add Courses{% endblock %}
+{% block content %}
+
+<h1> Add a New Course</h1>
+<form method="POST" action="{{ url_for('add_course' )}}">
+    <input name="coursename" placeholder="Course Name" required>
+    <textarea name="description" placeholder="Description"></textarea>
+
+    <label for="status">Status</label>
+    <select name="status" id="status">
+        <option value="planned">Planned</option>
+        <option value="in_progress">In progress</option>
+        <option value="completed">Completed</option>
+    </select>
+
+    <label for="tags">Tags (comma seperated)</label>
+    <input type="text" name="tags" value="">
+
+    <br><br>
+    <button type="submit">Add Course</button>
+
+</form>
+
+
+{% endblock %}

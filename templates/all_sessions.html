@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}All Sessions{% endblock %}
+{% block content %}
+
+
+<h1>All Sessions</h1>
+<ul>
+    {% for session in sessions %}
+    <li>
+        <strong>{{ session.course.coursename }}</strong> - {{ session.date }} -
+        {% if session.hours or session.minutes %}
+        {% if session.hours %}{{ session.hours }} hour{% if session.hours > 1 %}s{% endif %}{% endif %}
+        {% if session.minutes %}
+        {% if session.hours %} {% endif %}{{ session.minutes }} minute{% if session.minutes > 1 %}s{% endif %}
+        {% endif %}
+        {% else %}
+        0 minutes
+        {% endif %}
+        <p style="font-size: xx-small;">
+            {% if session.notes %}
+            Notes: {{ session.notes }}
+            {% else %}
+            <em>No notes</em>
+            {% endif%}
+        </p>
+    </li>
+    {% else %}
+    <li>No sessions logged yet.</li>
+    {% endfor %}
+
+</ul>
+
+{% endblock %}
+

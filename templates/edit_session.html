@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Edit Session{% endblock %}
+{% block content %}
+
+
+<h1>Edit Session</h1>
+<form method="POST" action="">
+    <label> Course:</label>
+    <select name="course_id">
+        {% for course in courses %}
+        <option value="{{ course.id }}" {% if course.id==sess.course_id %}selected{% endif %}>{{ course.coursename }}
+        </option>
+        {% endfor %}
+    </select>
+    <label>Date:</label>
+    <input type="date" name="date" value="{{ sess.date }}">
+
+
+    <label>Hours:</label>
+    <input type="number" name="hours" value="{{ sess.hours }}" min="0">
+
+    <label>Minutes:</label>
+    <input type="number" name="minutes" value="{{ sess.minutes }}" min="0" max="59">
+
+    <label>Notes:</label>
+    <textarea name="notes">{{ sess.notes }}"</textarea>
+
+    <button type="submit">Update Session </button>
+</form>
+
+<form method="POST" action="{{ url_for('delete_session', session_id=sess.id) }}">
+    <button type="submit">Delete Session</button>
+
+</form>
+
+
+
+{% endblock %}

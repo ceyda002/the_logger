@@ -1,0 +1,250 @@
+/* Base styles */
+
+
+:root {
+    --bg-main: #f5f5f5;
+    --bg-card: #fbfbfd;
+    --text-main: #333333;
+    --text-muted: #555555;
+
+    --accent-primary: #5a7dff;
+    --accent-secondary: #9b5aff;
+    --accent-alert: #ff6b6b;
+
+    --border-radius: 12px;
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --nav-bg: var(--bg-card);
+    --footer-bg: var(--bg-card);
+
+    --input-bg: var(--bg-card);
+    --input-color: var(--text-main);
+    --input-border: rgba(90, 125, 255, 0.3);
+
+    --nav-bg-dark: #101418;
+    --footer-bg-dark: #101418;
+    --input-bg-dark: #101418;
+    --input-color-dark: #cfd8e0;
+
+}
+
+
+
+
+
+
+
+
+body.dark-mode {
+    --bg-main: #0a0f14;
+    --bg-card: #101418;
+    --text-main: #cfd8e0;
+    --text-muted: #8a95a5;
+    --nav-bg: var(--nav-bg-dark);
+    --footer-bg: var(--footer-bg-dark);
+    --input-bg: var(--input-bg-dark);
+    --input-color: var(--input-color-dark);
+
+}
+
+/* font */
+body {
+    font-family: 'Inter', 'Roboto', sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    transition: background 0.3s, color 0.3s;
+}
+
+
+h1,
+h2,
+h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+a {
+    color: var(--accent-primary);
+    text-decoration: none;
+}
+
+a:hover,
+a:active {
+    color: var(--accent-secondary);
+}
+
+a:visited {
+    color: var(--accent-primary);
+}
+
+
+.card,
+.course-card {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    padding: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2 ease;
+
+}
+
+.card:hover,
+.course-card:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 18px rgba(90, 125, 255, 0.2);
+}
+
+button {
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    background: var(--accent-secondary);
+    box-shadow: 0 0 16px rgba(90, 125, 255, 0.3);
+}
+
+
+nav {
+    background: var(--nav-bg);
+    color: var(--text-muted);
+    backdrop-filter: blur(6px);
+}
+
+.navbar {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: rgba(0, 0, 0, 0.8);
+}
+
+footer {
+    background-color: var(--footer-bg);
+    color: var(--text-muted);
+}
+
+
+/*animations*/
+.fade-in {
+    animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+input,
+textarea {
+    background-color: var(--input-bg);
+    color: var(--input-color);
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    transition: all 0.3s;
+
+
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(90, 125, 255, 0.2)
+}
+
+.flash {
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 5px;
+    list-style: none;
+    font-weight: 500;
+}
+
+.flash.success {
+    color: #ff6b6b;
+
+}
+
+
+
+.flash.error {
+    color: #ff6b6b;
+}
+
+.flash.info {
+    color: #ff6b6b;
+}
+
+
+/*landing pages*/
+
+.auth-container {
+    max-width: 400px;
+    margin: 4rem auto;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    background: var(--bg-card);
+    box-shadow: var(--shadow-light);
+    text-align: center;
+    animation: fadeIn 0.6 ease-in-out;
+}
+
+.auth-container h2 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--accent-primary);
+    margin-bottom: 1rem;
+}
+
+.auth-container p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.auth-container p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.auth-container input[type="text"],
+.auth-container input[type="password"],
+.auth-container input[type="email"] {
+    width: 100%;
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+    border: 1px solid #cfd8e0;
+    border-radius: var(--border-radius);
+    background: #cfd8e0;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+    color: #000000;
+}
+
+.auth-container input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 8px rgba(90, 125, 255, 0.2);
+
+}
+
+
+.auth-container button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-weight: 500;
+}

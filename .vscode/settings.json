@@ -1,0 +1,32 @@
+{
+    // Enable Emmet in HTML and Jinja
+    "emmet.includeLanguages": {
+        "jinja-html": "html",
+        "django-html": "html",
+        "html": "html"
+    },
+    // Trigger Emmet expansions with Tab
+    "emmet.triggerExpansionOnTab": true,
+    // Quick suggestions must be on for HTML, CSS, JS
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+    },
+    // Enable snippet suggestions
+    "editor.snippetSuggestions": "inline",
+    // Enable auto closing tags
+    "editor.autoClosingTags": true,
+    // Auto-complete brackets
+    "editor.autoClosingBrackets": "languageDefined",
+    // Auto format on save (optional, but helps with Jinja blocks)
+    "editor.formatOnSave": true,
+    // Files to recognize as HTML for Emmet (including .html, .jinja)
+    "files.associations": {
+        "*.html": "html",
+        "*.jinja": "jinja-html",
+        "*.jinja2": "jinja-html"
+    },
+    // Ensure IntelliSense is enabled
+    "editor.suggestOnTriggerCharacters": true
+}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Edit Course{% endblock %}
+{% block content %}
+<h1> Edit Course</h1>
+<form method="POST">
+    <label for="coursename">Course Name:</label>
+    <input name="coursename" value="{{ course.coursename }}" required>
+
+    <label for="description">Course Description:</label>
+    <textarea name="description">{{ course.description }}</textarea>
+
+
+    <label for="status">Status:</label>
+    <select name="status" id="status">
+
+        <option value="planned" {% if course.status=="planned" %}selected{% endif %}>Planned</option>
+        <option value="in_progress" {% if course.status=="in_progress" %}selected{% endif %}>In progress</option>
+        <option value="completed" {% if course.status=="completed" %}selected{% endif %}>Completed</option>
+
+    </select>
+
+
+    <label for="total_hours">Total Hours:</label>
+    <input type="number" name="total_hours" value="{{ course.total_hours }}" min="0">
+    <button type="submit">Update Course</button>
+
+    <label for="manual_hours">Manual Hours(minutes):</label>
+    <input type="number" name="manual_hours" value="{{ course.manual_hours }}" min="0"><br>
+    <button type="submit">Save</button>
+
+    <label fot="tags"> Tags(comma seperated):</label>
+    <input type="text" name="tags" value="{{ course.tags }}">
+
+</form>
+
+{% endblock %}

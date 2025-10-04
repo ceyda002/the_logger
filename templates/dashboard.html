@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+
+
+
+<h2>Welcome, {{ current_user.username }} !! </h2>
+
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<ul>
+    {% for category, message in messages %}
+    <li class="flash {{ category}}">
+
+        {{message}}
+    </li>
+    {% endfor %}
+
+</ul>
+{% endif %}
+{% endwith %}
+
+<h2>My Courses</h2>
+
+
+<ul>
+    {% for course in courses %}
+    <li>
+        <div class="course-card">
+            <strong>{{ course.coursename }} </strong><br>
+            <small>{{ course.description }}</small>
+            <small>Status: {{course.status}}</small><br>
+            <small>Total Time: {{ course.total_hours // 60 }}h {{ course.total_hours % 60 }}m </small><br>
+            <div class="actions">
+                <a href="{{ url_for('list_sessions', course_id=course.id) }}"> Sessions</a>
+                <!-- <span class="status">
+                    {% if course.status == 'completed' %}
+                    Completed
+                    {% elif course.status == 'in_progress' %}
+                    In progress
+                    {% else %}
+                    Planned
+                    {% endif %}
+                </span>  -->
+                <a href="{{ url_for('edit_course', course_id=course.id) }}">Edit</a>
+                <a href="{{ url_for('delete_course', course_id=course.id) }}">Delete</a>
+
+            </div>
+        </div>
+
+        {% else %}
+    <li>No courses added yet.</li>
+    </li>
+    {% endfor %}
+</ul>
+<h3>Time Distribution Across Courses</h3>
+<canvas id="courseChart" width="400" height="200"></canvas>
+
+<script>
+
+    const ctx = document.getElementById('courseChart').getContext('2d');
+    const courseChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ course_names | tojson }},
+    datasets: [{
+        label: 'Total Hours',
+        data: {{ course_hours | tojson }},
+        backgroundColor: '#5a7dff',
+        borderColor: '#9b5aff',
+        borderWidth: 1
+                }]
+
+            },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                    title: {
+                    display: true,
+                        text: 'Hours'
+                }
+            }
+        }
+    }
+                        
+  
+        });
+</script>
+
+
+<h2>My Sessions</h2>
+<ul>
+    {% for sess in sessions[:10] %}
+    <li>
+        <strong>{{ sess.course.coursename }}</strong> -
+        {{ sess.date }}: {{ sess.hours }}h {{ sess.minutes }}m <small>{{ sess.notes }}</small><br>
+    </li>
+    {% else %}
+    <li>No sessions logged yet.</li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('all_sessions')}}"> View All Sessions</a>
+<a href="{{ url_for('export_csv') }}"> Export Data as CSV</a>
+<a href="{{ url_for('export_json') }}"> Export Data as JSON</a>
+<br>
+<br>
+<br>
+<br>
+
+
+<br>
+<h3>Monthly Streak</h3>
+<canvas id="streakChart" width="400" height="200"></canvas>
+<script>
+    const Streakctx = document.getElementById('streakChart').getContext('2d');
+    const streakChart = new Chart(Streakctx, {
+        type: 'line',
+        data: {
+            labels: {{ streak_labels | tojson }},
+    datasets: [{
+        label: 'Study Hours',
+        data: {{ streak_values | tojson }},
+
+        backgroundColor: '#ff6b6b',
+        borderColor: '#5a7dff',
+        borderWidth: 1
+                }]
+            },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                    title: {
+                    display: true,
+                        text: 'Hours'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                        text: 'Date'
+                }
+            }
+        }
+    }
+        });
+
+</script>
+{% endblock %}

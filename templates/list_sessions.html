@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}My Sessions for {% endblock %}
+{% block content %}
+<h2>My Sessions for {{course.coursename}}</h2>
+<a href="{{ url_for('add_session', course_id=course_id) }}" class="course-link">Add New Session</a>
+{% if sessions %}
+<ul>
+    {% for sess in sessions %}
+    <li>
+        <strong>{{ sess.course.coursename }}</strong> -{{ sess.date }}
+        {{ sess.hours }}h {{ sess.minutes }}m <br>
+        Notes: {{ sess.notes }}<br>
+        <a href="{{ url_for('edit_session', session_id=sess.id) }}" class="course-link">Edit</a>
+        <form method="POST" action="{{ url_for('delete_session', session_id=sess.id)}}" style="display:inline;">
+            <button type="submit">Delete</button>
+
+        </form>
+
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p> No sessions logged yet.</p>
+{% endif %}
+
+
+
+{% endblock %}

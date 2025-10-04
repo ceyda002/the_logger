@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Stopwatch{% endblock %}
+{% block content %}
+
+
+
+
+
+
+
+
+
+<h2>STOPWATCH</h2>
+
+<div id="timer">00:00:00</div>
+<button id="startBtn">Start</button>
+<button id="stopBtn">Stop</button>
+<button id="resetBtn">Reset</button>
+
+<script>
+    let timerInterval = null;
+    let elapsed = parseInt(localStorage.getItem('stopwatchElapsed')) || 0;
+    let runningStartTime = parseInt(localStorage.getItem('stopwatchRunningStart')) || null;
+    let savedRunning = localStorage.getItem('stopwatchRunning') === 'true';
+
+    function format(ms) {
+        let totalSeconds = Math.floor(ms / 1000);
+        let hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+        let minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+        let seconds = String(totalSeconds % 60).padStart(2, '0');
+        return `${hours}:${minutes}:${seconds}`;
+    }
+
+    function getElapsed() {
+        if (savedRunning && runningStartTime) {
+            return elapsed + (Date.now() - runningStartTime);
+        }
+        return elapsed;
+    }
+
+    function updateTimer() {
+        document.getElementById('timer').innerText = format(getElapsed());
+        localStorage.setItem('stopwatchElapsed', getElapsed());
+    }
+
+    // Show initial time
+    updateTimer();
+
+    // Auto-start if running from last session
+    if (savedRunning) timerInterval = setInterval(updateTimer, 1000);
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+        if (!savedRunning) {
+            runningStartTime = Date.now();
+            savedRunning = true;
+            localStorage.setItem('stopwatchRunning', true);
+            localStorage.setItem('stopwatchRunningStart', runningStartTime);
+
+            if (!timerInterval) timerInterval = setInterval(updateTimer, 1000);
+        }
+    });
+
+    document.getElementById('stopBtn').addEventListener('click', () => {
+        if (savedRunning) {
+            elapsed = getElapsed();
+            savedRunning = false;
+            runningStartTime = null;
+            localStorage.setItem('stopwatchElapsed', elapsed);
+            localStorage.setItem('stopwatchRunning', false);
+            localStorage.removeItem('stopwatchRunningStart');
+
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        elapsed = 0;
+        savedRunning = false;
+        runningStartTime = null;
+        localStorage.setItem('stopwatchElapsed', 0);
+        localStorage.setItem('stopwatchRunning', false);
+        localStorage.removeItem('stopwatchRunningStart');
+
+        document.getElementById('timer').innerText = "00:00:00";
+
+        clearInterval(timerInterval);
+        timerInterval = null;
+    });
+</script>
+
+<script src="{{ url_for('static', filename='script.js')}}"></script>
+{% endblock %}
