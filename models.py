@@ -21,7 +21,7 @@ def __repr__(self):
 # course table
 class Course(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True) 
-    coursename = db.Column(db.String(150), unique=True, nullable=False)
+    coursename = db.Column(db.String(150),nullable=False)
     description = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(20), nullable=False, default='planned')
     createdat = db.Column(db.DateTime, default=datetime.utcnow)
