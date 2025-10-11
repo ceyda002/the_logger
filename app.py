@@ -34,6 +34,7 @@ def create_app():
     Migrate(app,db)
 
 
+
     
   
 
@@ -150,11 +151,19 @@ def create_app():
             coursename = request.form['coursename'].strip()
             description = request.form['description'].strip()
             status = request.form.get('status', 'planned')
-            total_hours = request.form.get("total_hours") or 0
-            manual_hours = request.form.get("manual_hours") or 0
+            try:
+                total_hours = int(request.form.get("total_hours") or 0)
+            except ValueError:
+                total_hours = 0
+            try:
+                manual_hours = int(request.form.get("manual_hours") or 0)
+            except ValueError:
+                manual_hours = 0
             tags_input = request.form.get("tags") or ""
             tags_cleaned = ",".join([t.strip() for t in tags_input.split(",") if t.strip()])
-            new_course = Course(coursename=coursename, description=description, status=status, user_id=current_user.id, total_hours=total_hours, manual_hours=manual_hours, tags= tags_cleaned, )
+            new_course = Course(coursename=coursename, description=description, status=status,
+                                user_id=current_user.id, total_hours=total_hours,
+                                manual_hours=manual_hours, tags=tags_cleaned)
             db.session.add(new_course)
             db.session.commit()
             flash('Course added.', 'success')
@@ -162,18 +171,21 @@ def create_app():
         return render_template('add_courses.html')
 
 
+
     @app.route('/courses')
     @login_required
     def list_courses():
-        query = request.args.get('q', '').lower()
+        query = request.args.get('q', '').strip()
+        base_query = Course.query.filter_by(user_id=current_user.id)
+
         if query:
-            courses = Course.query.filter(
+            base_query = base_query.filter(
                 (Course.coursename.ilike(f"%{query}%")) |
                 (Course.description.ilike(f"%{query}")) |
                 (Course.tags.ilike(f"%{query}%"))
-            ).all()
-        else:
-            courses = Course.query.all()
+            )
+        
+        courses = base_query.all()
         return render_template("courses.html", courses=courses, query=query)
 
         
@@ -191,15 +203,33 @@ def create_app():
             course.coursename = request.form['coursename'].strip()
             course.description = request.form['description'].strip()
             course.status = request.form.get('status', 'planned')
-            course.total_hours = int(request.form.get('total_hours', course.total_hours).strip() or 0)
-            course.manual_hours = int(request.form['manual_hours'].strip() or 0)
+
+            # parse totals safely
+            total_raw = request.form.get('total_hours', '')
+            manual_raw = request.form.get('manual_hours', '')
+
+            try:
+                course.total_hours = int(total_raw.strip()) if str(total_raw).strip() else (course.total_hours or 0)
+            except (ValueError, AttributeError):
+                course.total_hours = course.total_hours or 0
+
+            try:
+                course.manual_hours = int(manual_raw.strip()) if str(manual_raw).strip() else (course.manual_hours or 0)
+            except (ValueError, AttributeError):
+                course.manual_hours = course.manual_hours or 0
+
             tags_input = request.form.get("tags") or ""
             course.tags = ",".join([t.strip() for t in tags_input.split(",") if t.strip()])
+
             db.session.commit()
             update_course_total_hours(course.id)
             flash('Course updated.', 'success')
             return redirect(url_for('list_courses'))
         return render_template('edit_course.html', course=course)
+
+    
+
+
 
     @app.route('/courses/delete/<int:course_id>')
     @login_required
@@ -230,7 +260,7 @@ def create_app():
 
 
     ##session routes
-    @app.route('/sessions/add<int:course_id>', methods=['GET', 'POST'])
+    @app.route('/sessions/add/<int:course_id>', methods=['GET', 'POST'])
     @login_required
     def add_session(course_id):
         course = Course.query.get_or_404(course_id)
@@ -361,7 +391,7 @@ def create_app():
             })
 
             # return JSON response
-            return Response(json.dumps(data, indent=4), mimetype="application/json", headers={"Content-Disposition":"attachment;filename=sessions.json"})
+        return Response(json.dumps(data, indent=4), mimetype="application/json", headers={"Content-Disposition":"attachment;filename=sessions.json"})
 
 
 
@@ -377,3 +407,4 @@ if __name__ =="__main__":
     
     app.run(debug=True)
  
+    

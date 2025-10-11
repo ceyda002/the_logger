@@ -32,7 +32,9 @@
         <div class="course-card">
             <strong>{{ course.coursename }} </strong><br>
             <small>{{ course.description }}</small>
-            <small>Status: {{course.status}}</small><br>
+            {% set status_display = {'planned':'Planned', 'in_progress':'In progress', 'completed':'Completed'} %}
+            <small>Status: {{ status_display[course.status] }}</small><br>
+
             <small>Total Time: {{ course.total_hours // 60 }}h {{ course.total_hours % 60 }}m </small><br>
             <div class="actions">
                 <a href="{{ url_for('list_sessions', course_id=course.id) }}"> Sessions</a>

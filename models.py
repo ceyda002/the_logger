@@ -3,7 +3,9 @@ from extensions import db
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from app import db
+
+
+
 
 #user table 
 class User(db.Model, UserMixin):
@@ -26,7 +28,7 @@ class Course(db.Model, UserMixin):
     manual_hours = db.Column(db.Integer, default=0)
     total_hours = db.Column(db.Integer, nullable=False, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) # links the course to a user 
-    sess = db.relationship('Sess', backref='course', lazy=True)
+    sess = db.relationship('Sess', backref='course', lazy=True, cascade="all, delete-orphan")
     tags = db.Column(db.String(200))
     def __repr__(self):
         return f'<Course {self.coursename} ({self.status}) {self.total_hours}h>'
@@ -56,4 +58,6 @@ class Note(db.Model):
 
     course = db.relationship('Course', backref=db.backref('notes', lazy=True))
     
-
+def get_db():
+    from app import db
+    return db

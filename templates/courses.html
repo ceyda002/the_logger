@@ -21,7 +21,9 @@
     <div class="course-card">
         <strong>{{ course.coursename }}</strong>
         <small>{{ course.description }}</small><br>
-        <small>Status: {{ course.status }}</small><br>
+        {% set status_display = {'planned':'Planned', 'in_progress':'In progress', 'completed':'Completed'} %}
+        <small>Status: {{ status_display[course.status] }}</small><br>
+
         <small> Total Time: {{ course.total_hours // 60 }}h {{ course.total_hours % 60 }}m </small>
         <small>(Manual: {{ course.manual_hours // 60 }}h {{ course.manual_hours % 60 }}m )</small>
         {% if course.tags %}
