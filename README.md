@@ -1,12 +1,13 @@
+
 # The Logger 
-
-# The Logger is a  web app that helps students to tracking their study hours, manage their courses and analyze and improve their study habits. Also the stopwatch and audio enables students to focus.
-
-
-Description: Studying can be seen hard and boring for most people who lack self-discipline. The reason I built this app is  while I was studying for CS50 course, I tried to keep my study dates, study hours, courses i want to do later  in order to maintain persistance.But the problem was it was getting difficult to do it myself after certain time. So I though this app would be useful to me and many people who want to self-study systematically while keeping track of their process. Also another problem this app solves is that for people who has hard time studying due to focus, or people who never enjoyed studying before;  the white noise, stopwatch, charts and session helps to solve that focus problem and also app encourages a motivation and self-discipline.THe features includes user accounts, course management , study sessions, stopwatch, visual charts, export for downloading as CSV or JSON, dark mode toggle, white noise player.
+### video link : https://youtu.be/ApgFd1DUJwQ
+### DESCRIPTION: My project is a web app that students can use for tracking their study hours, track their courses and analyze and improve their study habits and also the stopwatch and audio enables students to focus.
 
 
-#video link
+Description: Studying can be seen hard and boring for most people who doesn't have self-discipline. The reason I built this app is  while I was studying for CS50 course, I tried to keep my study dates, study hours, courses i want to do later  in order to maintain persistance.But the problem was it was getting difficult to do it myself after certain time. And therefore I though this app would be useful to me and many people who want to self-study systematically while keeping track of their process. Also another problem this app solves is that for people who has hard time studying due to focus, or people who never enjoyed studying before;  the white noise, stopwatch, charts and session helps to solve that focus problem and also app encourages  motivation and self-discipline.The features includes user accounts, course management , study sessions, stopwatch, visual charts, export for downloading as CSV or JSON, dark mode toggle, white noise player.
+
+
+
 
 File explanations:
 -'app.py': The main Flask application containing all routes 
@@ -32,12 +33,11 @@ Notes:
 
 -- Installation
 1 - clone the repository
+
 2 - Install dependencies:
-3 -  Inıtialize the data base 
- from app import init_db
- init_db()
- 4 - run the app
- flask run 
+3 -  Inıtialize the database 
+ 4 - run the FLASK app
+
  open 'http://127.0.0.1:5000 in your browser.
 -- Instructions 
 1 - register to create an account 
@@ -64,4 +64,5 @@ to make the stopwatch consistent and visible throughout all pages but later it i
 - more audio noises like lofi, or other.
 
 Credits 
-Built with the guidance from CS50 and CS50w lectures. Development support from ChatGPT while debugging.
+with the help of CS50 and CS50w lectures and ChatGPT
+
